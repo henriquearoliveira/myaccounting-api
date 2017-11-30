@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/LayoutPadrao">
+
+<th:block layout:fragment="conteudo">
+
+	<div class="content">
+
+		<div class="row">
+
+			<div class="col-md-12">
+
+				<div class="box" id="altaResolucao">
+					<div class="box-header">
+						<h3 class="box-title">Depósitos</h3>
+					</div>
+					
+					<div class="box-body" style="padding: 0px;">
+					
+						<div id="bodyteste"></div>
+					
+					</div>
+					
+					<!-- /.box-header -->
+					<!-- <div class="box-body">
+						<table id="tabela1" class="table table-bordered table-striped">
+							<thead>
+								<tr>
+									<th class="text-center">Código</th>
+									<th class="text-center">Data/Hora</th>
+									<th class="text-center">Descrição</th>
+									<th class="text-center">Ação</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="conta : ${contas}" th:id="tr+${conta.id}">
+									<td class="col-sm-1 text-center" th:text="${conta.id}"></td>
+									<td class="col-sm-2" th:text="${#temporals.format(conta.dataHoraCadastro,'dd/MM/yyyy')}"></td> 'dd/MM/yyyy HH:mm' DATA E HORA 
+									<td><a th:href="@{/conta/{id}(id=${conta.id})}" th:text="${conta.descricao}"></a></td>
+									<td class="col-xs-2 text-center">
+									
+										<a th:href="@{/conta/} + ${conta.id}" style="padding: 6px 10px" class="glyphicon glyphicon-edit" role="button"></a>
+										<a th:href="@{/categoria/remove/} + ${categoria.id}" style="padding: 6px 8px" class="btn btn-danger" role="button">Remover</a>
+										<a th:href="@{/categoria/remove/} + ${categoria.id}" style="padding: 6px 8px" class="btn btn-danger" role="button">Remover</a>
+										<button th:id="${conta.id}" th:value="${conta.id}" type="button" data-toggle="modal" data-target="#confirmaExclusaoModal" style="background:none;border:none;padding:0;" ><i class="glyphicon glyphicon-trash"></i></button>
+										
+									</td>
+								</tr>
+								<tr th:if="${contas.empty}">
+									<td colspan="12">Nenhuma conta cadastrada.</td>
+								</tr>
+							</tbody>
+							<tfoot>
+								<tr>
+									<th>Código</th>
+									<th>Descrição</th>
+									<th>Observação</th>
+								</tr>
+							</tfoot>
+						</table>
+					</div> -->
+					<!-- /.box-body -->
+				</div>
+				
+				<!-- Profile Image -->
+	          <div class="box box-primary" id="baixaResolucao">
+	          
+	          	<div class="box-header">
+						<h3 class="box-title">Contas</h3>
+				</div>
+	          
+	            <!-- <div class="box-body">
+	
+	              <ul class="list-group list-group-unbordered" id="tabela1">
+	                <li class="list-group-item" th:each="conta : ${contas}" th:id="li+${conta.id}">
+	                  <div class="row">
+	                  
+		                  <div class="col-xs-9">
+		                  	<a th:href="@{/conta/{id}(id=${conta.id})}" th:text="${conta.descricao}"></a> 	
+		                  </div> 
+		                  
+		                  <div class="col-xs-3">
+		                  	<button th:id="${conta.id}" th:value="${conta.id}" type="button" data-toggle="modal" data-target="#confirmaExclusaoModal" style="background:none;border:none;padding:0;" ><i class="glyphicon glyphicon-trash"></i></button>
+		                  </div>
+	                  
+	                  </div>
+	                </li>
+	                <li class="list-group-item">
+	                  <b>Following</b> <a class="pull-right">543</a>
+	                </li>
+	                <li class="list-group-item">
+	                  <b>Friends</b> <a class="pull-right">13,287</a>
+	                </li>
+	              </ul>
+	
+	            </div> -->
+	            <!-- /.box-body -->
+	          </div>
+	          <!-- /.box -->
+
+			</div>
+
+		</div>
+	</div>
+	
+	<div th:replace="modals/Exclusao :: alert" th:remove="tag"></div>
+
+</th:block>
+
+</html>

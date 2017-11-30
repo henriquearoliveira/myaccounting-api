@@ -1,0 +1,45 @@
+<div th:fragment="tabelaLancamentoMobile"
+	xmlns:th="http://www.thymeleaf.org" th:remove="tag"
+	th:unless="${#lists.isEmpty(lancamentos)}">
+
+	<ul class="list-group list-group-unbordered"> <!-- tabela1 -->
+		<li class="list-group-item" th:each="lancamento : ${lancamentos}" th:id="li+${lancamento.id}">
+			<div class="row">
+
+				<div class="col-xs-6">
+					<a th:href="@{/lancamento/{id}(id=${lancamento.id})}" th:text="${lancamento.descricao}"></a>
+				</div>
+				
+				<div class="col-xs-4">
+					<span th:text="((${lancamento.categoria.tipoDeCategoria.name()} == 'DESPESA') ? '- ' : '')
+					+ ${'R$ ' + #numbers.formatDecimal(lancamento.valorLancamento, 0, 'POINT', 2, 'COMMA')}"
+					th:class="${lancamento.categoria.tipoDeCategoria.name() == 'RECEITA'} ? '' : (${lancamento.pago == true} AND ${lancamento.categoria.tipoDeCategoria.name() == 'DESPESA'} ? 'text-success' : 'text-danger')"></span>
+				</div>
+
+				<div class="col-xs-2">
+					<button th:id="${lancamento.id}"
+						th:value="${lancamento.id}" type="button" data-toggle="modal" data-target="#confirmaExclusaoModal" style="background:none;border:none;padding:0;" ><i class="glyphicon glyphicon-trash"></i></button>
+				</div>
+
+			</div>
+
+		</li>
+		
+	</ul>
+	
+	<div class="row">
+		<div class="col-xs-offset-2 col-xs-10 col-md-offset-8 col-md-4 text-right">
+			<span style= "color: gray;">Saldo Atual: </span>
+
+			<strong style= "font-size: 20px; color: #00C49D;" th:text="${saldo != null} ? ${'R$ ' + #numbers.formatDecimal(saldo, 0, 'POINT', 2, 'COMMA')}">0,00</strong>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-xs-12 col-md-offset-7 col-md-5 text-right">
+			<span style= "color: gray;">Probabilidade Saldo: </span>
+			<strong style= "font-size: 20px; color: #00C49D;" th:text="${saldoProvavel != null} ? ${'R$ ' + #numbers.formatDecimal(saldoProvavel, 0, 'POINT', 2, 'COMMA')}">0,00</strong>
+		</div>
+	</div>
+	
+</div>

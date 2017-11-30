@@ -1,0 +1,281 @@
+@media screen and (min-width: 780px) {
+    #esconder {
+        display: none !important;
+    }
+}
+
+@media screen and (max-width: 780px) {
+    #altaResolucao {
+        display: none !important;
+    }
+}
+
+@media screen and (min-width: 780px) { /* TUDO QUE FOR MENOR QUE :  ( DESSA FORMA QUE SE LÊ )*/
+    #baixaResolucao {
+        display: none !important;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    #hideWhenTwoThousand {
+        display: none !important;
+    }
+}
+
+@media screen and (max-width: 990px) {
+    #hideWhenNinetyNine {
+        display: none !important;
+    }
+}
+
+/* 100% Image Width on Smaller Screens */
+@media only screen and (max-width: 700px){
+    .modalImage-content {
+        width: 100%;
+    }
+}
+
+/* MODAL DAS IMAGENS  */
+ #myImg {
+	cursor: zoom-in;
+}
+
+.close {
+	color: white;
+	opacity: 1;
+	margin-bottom: 10px;
+}
+
+.modal-bodys {
+	padding: 0px;
+	
+	position:relative; /* This avoids whatever it's absolute inside of it to go off the container */
+    height: 250px;
+    margin-bottom: 30px;
+}
+
+.modal-headers {
+	border-bottom: none;
+	padding: 0px;	
+}
+
+.modal-contents {
+    background-color: transparent;
+}
+
+.img-responsive.teste {
+	vertical-align:bottom;
+    position:relative;
+    z-index:-1;
+    
+    
+    overflow:hidden;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    display:inline-block;
+    
+    margin-bottom: 20px;
+}
+
+/*   */
+
+.glyphicon.glyphicon-trash {
+	color:#ff0000;
+}
+
+.glyphicon.glyphicon-trash:hover {
+	color:#f33b3b;
+}
+
+/* CHECKBOX LISTA */
+html {
+    font-family: Lato, 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    font-size: 14px;
+}
+
+.table {
+    border: none;
+}
+
+.table-definition thead th:first-child {
+    pointer-events: none;
+    background: white;
+    border: none;
+}
+
+.table td {
+    vertical-align: middle;
+}
+
+.page-item > * {
+    border: none;
+}
+
+.custom-checkbox {
+  min-height: 1rem;
+  padding-left: 0;
+  margin-right: 0;
+  cursor: pointer; 
+}
+.custom-checkbox .custom-control-indicator {
+  content: "";
+  display: inline-block;
+  position: relative;
+  width: 30px;
+  height: 10px;
+  background-color: #818181;
+  border-radius: 15px;
+  margin-right: 10px;
+  -webkit-transition: background .3s ease;
+  transition: background .3s ease;
+  vertical-align: middle;
+  margin: 0 16px;
+  box-shadow: none; 
+}
+.custom-checkbox .custom-control-indicator.sem-margin {
+  margin: 0 0; !important;
+}
+.custom-checkbox .custom-control-indicator:after {
+  content: "";
+  position: absolute;
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  background-color: #f1f1f1;
+  border-radius: 21px;
+  box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.4);
+  left: -2px;
+  top: -4px;
+  -webkit-transition: left .3s ease, background .3s ease, box-shadow .1s ease;
+  transition: left .3s ease, background .3s ease, box-shadow .1s ease; 
+}
+.custom-checkbox .custom-control-input:checked ~ .custom-control-indicator {
+  background-color: #84c7c1;
+  background-image: none;
+  box-shadow: none !important; 
+}
+  .custom-checkbox .custom-control-input:checked ~ .custom-control-indicator:after {
+    background-color: #84c7c1;
+    left: 15px; 
+  }
+.custom-checkbox .custom-control-input:focus ~ .custom-control-indicator {
+  box-shadow: none !important; 
+}
+
+.btn-default.personalized-color {
+	background-color: #ffffff;
+	border-color: #ecf0f5;
+}
+
+.btn-default.personalized-color:hover{
+	background-color: #e6e6e6;
+}
+
+.open .dropdown-menu {
+	background-color: #EDEDED;
+}
+
+/* EFEITO SLOW MOTION DOS DROPDOWN's */
+.dropdown .dropdown-menu {
+    -webkit-transition: all 0.5s; /*PADRÃO ERA 0.3s*/
+    -moz-transition: all 0.5s;
+    -ms-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    transition: all 0.5s;
+
+    max-height: 0;
+    display: block;
+    overflow: hidden;
+    opacity: 0;
+}
+
+.dropdown.open .dropdown-menu {
+    max-height: 300px;
+    opacity: 1;
+    border-color: #989393;
+}
+
+/* .input-group-btn.dropdown.open .dropdown-menu {
+	background-color: #F1F1F1;
+} */
+
+.input-group-addon, .input-group-btn {
+    width: 0%;
+}
+
+/*
+#myImg:hover {opacity: 0.7;}
+
+The Modal (background)
+.modalImage {
+    display: none; Hidden by default
+    position: absolute; Stay in place
+    z-index: 1000; Sit on top
+    padding-top: 100px; Location of the box
+    left: 0;
+    top: 0;
+    width: 100%; Full width
+    height: 100%; Full height 
+    overflow: hidden; Enable scroll if needed
+    overflow-y: hidden;
+    overflow-x: auto;
+    background-color: rgb(0,0,0); Fallback color
+    background-color: rgba(0,0,0,0.9); Black w/ opacity
+}
+
+Modal Content (image)
+.modalImage-content {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+}
+
+Caption of Modal Image
+#caption {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+    text-align: center;
+    color: #ccc;
+    padding: 10px 0;
+    height: 150px;
+}
+
+Add Animation
+.modalImage-content, #caption {    
+    -webkit-animation-name: zoom;
+    -webkit-animation-duration: 0.6s;
+    animation-name: zoom;
+    animation-duration: 0.6s;
+}
+
+@-webkit-keyframes zoom {
+    from {-webkit-transform:scale(0)} 
+    to {-webkit-transform:scale(1)}
+}
+
+@keyframes zoom {
+    from {transform:scale(0)} 
+    to {transform:scale(1)}
+}
+
+The Close Button
+.closeImage {
+    position: absolute;
+    top: 30px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.closeImage:hover,
+.closeImage:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+} */

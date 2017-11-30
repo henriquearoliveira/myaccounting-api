@@ -1,0 +1,84 @@
+<div th:fragment="lancamentoEXCEL" xmlns:th="http://www.thymeleaf.org"
+	th:remove="tag" th:unless="${#lists.isEmpty(lancamentos)}">
+
+	<div th:replace="mensagensutils/MensagensAlertas :: alert"></div>
+
+	<form method="POST" th:object="${lancamentos}"
+		th:action="@{/lancamento/importlancamentos}" role="form">
+
+		<table class="table table-bordered table-striped">
+
+			<thead>
+
+				<tr>
+					<th class="text-center">Data</th>
+					<th class="text-center">Descrição</th>
+					<th class="text-center">Categoria</th>
+					<th class="text-center">Valor</th>
+				</tr>
+
+			</thead>
+
+			<tbody>
+
+				<tr th:each="lancamento, stat : ${lancamentos.lancamentos}">
+					<!-- th:id="tr+${lancamento.id}" -->
+					<!-- <td class="col-sm-1 text-center">
+	                <label class="custom-control custom-checkbox" th:if="${lancamento.categoria.tipoDeCategoria.name()} == 'DESPESA'" >
+	                    <input type="checkbox" class="custom-control-input" style="display: none;" th:checked="${lancamento.pago}" onclick="return false;"/>
+	                    <span class="custom-control-indicator"></span>
+	                </label>
+                </td> -->
+					<td>
+						<!-- O TH:FIELD JÁ PREENCHE O VALUE E O ENVIO -->
+						<input id="dateFile"
+						class="col-xs-12 col-md-offset-2 col-md-8 text-center dateFile"
+						th:field="*{lancamentos[__${stat.index}__].dataHoraLancamento}" />
+						<!-- FORMA DE VINCULAR O INDEX DE CADA LANCAMENTO --> <!-- th:text="${#temporals.format(lancamento.dataHoraLancamento,'dd/MM/yyyy')}" -->
+					</td>
+
+					<td class="text-center">
+					
+						<input class="col-sm-12"
+						th:field="*{lancamentos[__${stat.index}__].descricao}" /> <!-- th:text="${lancamento.descricao}" -->
+					</td>
+					<!-- <td class="col-sm-2" th:text="((${lancamento.categoria.tipoDeCategoria.name()} == 'DESPESA') ? '- ' : '') + ${'R$ ' + #numbers.formatDecimal(lancamento.valorLancamento, 1, 'POINT', 2, 'COMMA')}"></td> -->
+
+					<!-- select -->
+					<td>
+						<select id="cat" class="form-control"
+							th:field="*{lancamentos[__${stat.index}__].categoria}">
+							
+							<option th:each="categoria : ${categorias}"
+								th:value="${categoria.id}" th:text="${categoria.descricao}"></option>
+						</select>
+					</td>
+					
+					<td class="col-sm-2 text-center">
+					
+						<input class="col-sm-12 text-right idValorLancamento"
+						th:field="*{lancamentos[__${stat.index}__].valorLancamento}" /> <!-- th:text="${lancamento.descricao}" -->
+					</td>
+				</tr>
+
+			</tbody>
+
+		</table>
+
+		<div class="row">
+			<div class="col-sm-12 text-center">
+				<button id="botaoGravarExcel" class="btn  btn-primary" type="submit">Salvar</button>
+			</div>
+		</div>
+
+	</form>
+
+	<!-- <script th:inline="javascript">
+	
+		$(function() {
+			alert("testes");
+		}
+
+	</script> -->
+
+</div>

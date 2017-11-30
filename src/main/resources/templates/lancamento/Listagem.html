@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/LayoutPadrao">
+
+<th:block layout:fragment="conteudo">
+
+	<div class="content">
+
+		<div class="row">
+
+			<div class="col-md-12">
+			
+				<!-- Lista Completa -->
+				<div class="box">
+				
+					<div id="baixaResolucao" class="alert  alert-info  alert-dismissible">
+						<button type="button" class="close" data-dismiss="alert">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h4>
+							<i  class="icon fa fa-info"></i>
+							Aviso:
+						</h4>
+						<span>Débitos serão exibidos em vermelho caso ainda não estarem pagos.</span>
+					</div>
+
+					<div class="box-header">
+					
+						<h3 class="box-title">Lancamentos</h3>
+						
+					</div>
+
+					<!-- /.box-header -->
+					<div class="box-body">
+					
+						<div id="bodyteste"></div>
+
+						<div th:replace="mensagensutils/MensagensAlertas :: alert" th:remove="tag"></div>
+
+						<form method="POST" th:object="${lancamento}" th:action="@{/lancamento}" role="form">
+
+							<div th:replace="mensagensutils/Erros :: erros" th:remove="tag"></div>
+
+							<div class="row">
+
+								<!-- date -->
+								<div class="col-sm-12 col-md-offset-2 col-md-4">
+									<div class="form-group">
+										<label>Date:</label>
+
+										<div class="col-xs-12 col-sm-12 col-md-12 input-group date" id="monthYearListagem">
+											<div class="input-group-addon"> <i class="fa fa-calendar"></i>
+											</div>
+
+											<input id="inputMonthYear" type="text" value="date" class="form-control pull-right text-center"
+												readonly="readonly" th:value="${dataHoraLancamento != null} ? ${lancamento.dataHoraLancamento}"
+												th:field="*{dataHoraLancamento}" />
+										</div>
+									</div>
+									<!-- /.form group -->
+								</div>
+								
+								<div class="col-md-4">
+					                <div class="form-group">
+					                  <label>Selecione: </label>
+					                  <select id="idConta" class="form-control" th:field="*{conta}">
+					                    <option value="">Seleciona a conta</option>
+					                    <option th:each="conta : ${contas}" th:value="${conta.id}" th:text="${conta.descricao}"></option>
+					                  </select>
+					                </div>
+					            </div>
+
+							</div>
+
+						</form>
+						
+						<div id="ajaxLoadReferencia">
+						
+							<div id="ajax-loading" class="text-center">
+							
+							</div>
+						
+						</div>
+						
+						<div id="altaResolucao" style="padding: 0px; ">
+						
+							<div id="tabelaBlock"> 
+								
+							</div>
+						
+						</div>
+						
+						<div id="baixaResolucao">
+						
+							<div id="tabelaBlockMobile">
+								
+							</div>
+							
+						</div>
+
+					</div>
+
+				</div>
+
+			</div>
+
+		</div>
+	</div>
+	
+	<script th:inline="javascript">
+		/*<![CDATA[*/
+		/* 	
+		 $('#inputMonthYear').on("change", function(){
+			
+			var urlTeste = '/lancamento/tabela';
+			
+			if($('#inputMonthYear').val() != ''){
+				urlTeste = urlTeste + '/' + encodeURIComponent($('#inputMonthYear').val());
+			}
+			
+			/* $("#tabelaBlock").load(url, function(){
+				$.getScript('/layout/plugins/datatables/jquery.dataTables.min.js');
+				$.getScript('/layout/plugins/datatables/dataTables.bootstrap.min.js');
+				$.getScript('/layout/javascript/login.js');
+			}); */
+			
+		    /* $.ajax({
+		        type: "GET",
+		        url: urlTeste,
+		        datatype : "html",
+		        success: function(html) {
+		            console.log(html);
+		             $("#tabelaBlock").load(html);
+		            }
+		    });
+			
+		});  */
+		
+		/*]]>*/
+		
+		
+	</script>
+	
+	<div th:replace="modals/Exclusao :: alert" th:remove="tag"></div>
+	<div th:replace="modals/LancamentoProximoMes :: alert" th:remove="tag"></div>
+
+</th:block>
+
+</html>

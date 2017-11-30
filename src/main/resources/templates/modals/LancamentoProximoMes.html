@@ -1,0 +1,103 @@
+<div th:fragment="alert" xmlns:th="http://www.thymeleaf.org"
+	th:remove="tag">
+
+	<div class="modal fade" id="confirmaLancamentoOuDeposito" tabindex="-1"
+		role="dialog">
+		<div class="modal-dialog" role="document">
+
+			<div class="modal-content">
+
+				<div class="modal-header">
+				
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+
+					<h4 class="modal-title" id="myModalLabel">Lançamento próximo mês</h4>
+				</div>
+
+				<div class="modal-body">
+				
+					<div id="valorDigitadoIncorretoError"></div>
+
+					<form method="POST" id="formProximoMes" th:object="${lancamento}"
+						th:action="@{/lancamento/lancamentoOuDepositoProximoMes}" role="form">
+
+						<!-- <div th:replace="mensagensutils/Erros :: erros" th:remove="tag"></div> -->
+
+						<div class="row">
+
+							<div class="col-md-12">
+
+								<div class="form-group hidden">
+									<label for="date">Data</label>
+									
+									<input type="hidden"
+										class="valueModal" th:name="date" value="" />
+									<!-- <input id="id" type="text" class="form-control"
+										th:value="${conta.id != null} ? ${conta.id}"
+										th:field="*{id}" readonly="true" /> -->
+								</div>
+								
+								<div class="form-group">
+									<label>Selecione: </label>
+									
+									<select id="opcao" class="form-control" th:name="opcao">
+										<!-- <option value="">Seleciona a conta</option> -->
+										<option th:each="opcao : ${opcoes}" th:value="${opcao}"
+											th:text="${opcao.descricao}"></option>
+										<!-- <option th:each="conta : ${contas}" th:value="${conta.id}"
+											th:text="${conta.descricao}"></option> -->
+									</select>
+								</div>
+
+								<div class="form-group" id="idContaModal">
+									<label>Selecione: </label>
+									
+									<select id="conta" class="form-control" th:name="conta">
+										<option value="">Seleciona a conta</option>
+										<option th:each="conta : ${contas}" th:value="${conta.id}"
+											th:text="${conta.descricao}"></option>
+										<!-- <option th:each="conta : ${contas}" th:value="${conta.id}"
+											th:text="${conta.descricao}"></option> -->
+									</select>
+								</div>
+
+							</div>
+							
+							<div class="col-md-12">
+				            	<div class="form-group" id="idContaSelecao">
+									<label for="valorConversao" >Valor creditado para o próximo mês:</label>
+									
+									<input id="valorConversao" type="text" class="form-control"
+										th:name="valor"/>
+								</div>
+							</div>
+
+						</div>
+
+						<div class="row">
+							<div class="col-md-6">
+							
+								<button type="button" class="btn  btn-default" data-dismiss="modal">Cancelar</button>
+							
+								<button class="btn  btn-primary" id="salvarDeposito" type="submit">Salvar</button>
+								
+							</div>
+						</div>
+
+					</form>
+
+				</div>
+
+				<!-- <div class="modal-footer">
+					<button type="button" class="btn  btn-default" data-dismiss="modal">Cancelar</button>
+					<button id="botaoExcluirRegistro" type="button"
+						data-dismiss="modal" class="btn  btn-primary">Excluir</button>
+				</div> -->
+			</div>
+		</div>
+	</div>
+
+</div>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/LayoutPadrao">
+
+<th:block layout:fragment="conteudo">
+
+	<div class="content">
+
+		<div class="row">
+
+			<div class="col-md-12">
+
+				<div class="box box-warning">
+
+					<div class="box-header with-border">
+						<h3 class="box-title">Novo</h3>
+					</div>
+
+					<div class="box-body">
+					
+						<div th:replace="mensagensutils/MensagensAlertas :: alert"></div>
+					
+						<form method="POST" th:object="${lancamento}" th:action="@{/lancamento}" role="form">
+						
+							<div th:replace="mensagensutils/Erros :: erros"></div>
+							
+							<div class="row">
+							
+								<!-- Input -->
+								<div class="col-md-4">
+								
+									<div class="form-group hidden">
+										<label for="descricao" >Codigo</label>
+										<input id="id" type="text" class="form-control" th:value="${lancamento.id != null} ? ${lancamento.id}" th:field="*{id}" readonly="true"/>
+									</div>
+									
+									<div class="form-group">
+										<label for="descricao" >Descrição:</label>
+										<input id="descricao" type="text" class="form-control" th:value="${lancamento.descricao != null} ? ${lancamento.descricao}" th:field="*{descricao}"/>
+									</div>
+
+								</div>
+								
+								<!-- select -->
+								<div class="col-md-4">
+					                <div class="form-group">
+					                  <label>Selecione: </label>
+					                  <select id="cat" class="form-control" th:field="*{categoria}">
+					                    <option value="">Seleciona a categoria</option>
+					                    <option th:each="categoria : ${categorias}" th:value="${categoria.id}" th:text="${categoria.descricao}"></option>
+					                  </select>
+					                </div>
+					            </div>
+					            
+					            <!-- date -->
+					            <div class="col-md-4">
+				              		<div class="form-group">
+				                	<label>Data:</label>
+				
+					                	<div class="input-group date">
+					                  		<div class="input-group-addon">
+					                    		<i class="fa fa-calendar"></i>
+					                  		</div>
+					                  		
+					                  		<input id="dataHoraLancamento" type="date" class="form-control pull-right"
+					                  		th:value="${dataHoraLancamento != null} ? ${lancamento.dataHoraLancamento}" th:field="*{dataHoraLancamento}" />
+						                </div>
+					              	</div>
+					              <!-- /.form group -->
+				             	</div>
+
+							</div>
+							
+							<div class="row">
+							
+								<!-- select -->
+								<div class="col-md-4">
+					                <div class="form-group">
+					                  <label>Selecione: </label>
+					                  <select id="conta" class="form-control" th:field="*{conta}">
+					                    <option value="">Seleciona a conta</option>
+					                    <option th:each="conta : ${contas}" th:value="${conta.id}" th:text="${conta.descricao}"></option>
+					                  </select>
+					                </div>
+					            </div>
+					            
+					            <div class="col-md-4">
+					            	<div class="form-group">
+										<label for="valorConversao" >Valor total:</label>
+										<input id="valorConversao" type="text" class="form-control" th:value="${valorConversao != null} ? ${lancamento.valorConversao}" th:field="*{valorConversao}"/>
+									</div>
+								</div>
+								
+								<div style="display:none;" id="idValorPago">
+								
+									<!-- <div class="col-md-2">
+										<div class="form-group">
+											<label for="parcela" >Parcela(s):</label>
+											<input id="parcela" type="number" min="1" max="100" class="form-control" th:value="${lancamento.parcela != null} ? ${lancamento.parcela}" th:field="*{parcela}"/>
+										</div>
+									</div> -->
+									
+									<div class="col-md-2">
+									
+						            	<div class="form-group">
+											<label>Pago:</label>
+											<div>
+												<label class="custom-control custom-checkbox">
+								                    <input type="checkbox" class="custom-control-input" style="display: none;" th:checked="${lancamento.pago}" th:field="*{pago}"/>
+								                    <span class="custom-control-indicator sem-margin"></span>
+								                </label>
+							                </div>
+										</div>
+										
+									</div>
+									
+									<div class="col-md-2">
+									
+						            	<div class="form-group">
+											<label>Parcelado ?</label>
+											<div>
+												<label class="custom-control custom-checkbox">
+								                    <input type="checkbox" id="isParcelado" class="custom-control-input" style="display: none;" th:checked="${lancamento.parcelado}" th:readonly="${lancamento.parcelado}" th:field="*{parcelado}"/>
+								                    <span class="custom-control-indicator sem-margin"></span>
+								                </label>
+							                </div>
+										</div>
+										
+									</div>
+								
+								</div>
+								
+							</div>
+							
+							<div class="row">
+							
+								<div style="display:none;" id="idParcelado">
+							
+							
+									<div class="col-md-4">
+										<div class="form-group">
+											<label for="parcelas" >Parcela(s):</label>
+											<input type="number" min="0" max="100" class="form-control" th:readonly="${lancamento.parcelas != null}" id="parcelas" th:value="${lancamento.parcelas != null} ? ${lancamento.parcelas}" th:field="*{parcelas}"/>
+										</div>
+									</div>
+									
+						            <div class="col-md-4">
+					              		<div class="form-group">
+					                	<label>Data Vencimento da 1ª Parc.:</label>
+					
+						                	<div class="input-group date">
+						                  		<div class="input-group-addon">
+						                    		<i class="fa fa-calendar"></i>
+						                  		</div>
+						                  		
+						                  		<input id="dataHoraVencimento" type="date" class="form-control pull-right"
+						                  		th:value="${dataHoraVencimento != null} ? ${lancamento.dataHoraVencimento}" th:field="*{dataHoraVencimento}" />
+							                </div>
+						              	</div>
+					             	</div>
+					             	
+								</div>
+							
+							</div>
+							
+							<div class="row">
+								<div class="col-md-6">
+									<button class="btn  btn-primary" type="submit">Salvar</button>
+								</div>
+							</div>
+
+						</form>
+
+					</div>
+
+				</div>
+
+			</div>
+
+		</div>
+	</div>
+	
+	<script th:src="@{/layout/javascript/funcoesLancamento.js}"></script>
+
+</th:block>
+
+</html>

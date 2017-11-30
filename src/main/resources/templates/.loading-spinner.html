@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/LayoutPadrao">
+
+<th:block layout:fragment="conteudo">
+	<div class="content">
+
+		<div class="row">
+		
+			<div class="col-lg-3 col-md-4 col-xs-6">
+				<!-- small box -->
+				<div class="small-box bg-green">
+					<div class="inner">
+						<h3> <span th:text="${receitasDoMes}" th:remove="tag"></span> <sup style="font-size: 20px">+</sup></h3>
+						
+						<!-- <h3>
+							53<sup style="font-size: 20px">%</sup>
+						</h3> -->
+
+						<p style="color: white;" th:text="${#temporals.format(#temporals.createNow(), 'MMMM')}">Mês</p>
+					</div>
+					<div class="icon">
+						<i class="ion ion-stats-bars"></i>
+					</div>
+					<a href="#" class="small-box-footer"> &nbsp; <!-- <i
+						class="fa fa-arrow-circle-right"></i> -->
+					</a>
+				</div>
+			</div>
+			
+			<div  class="col-lg-3 col-md-4 col-xs-6">
+				<!-- small box -->
+				<div class="small-box bg-red">
+					<div class="inner">
+						<h3> <span th:text="${despesasDoMes}" th:remove="tag"></span> <sup style="font-size: 20px">-</sup></h3>
+
+						<p style="color: white;" th:text="${#temporals.format(#temporals.createNow(), 'MMMM')}">Mês</p>
+					</div>
+					<div class="icon">
+						<i class="ion ion-pie-graph"></i>
+					</div>
+					<a href="#" class="small-box-footer">&nbsp; <!-- <i
+						class="fa fa-arrow-circle-right"></i> -->
+					</a>
+				</div>
+			</div>
+
+			<div id="hideWhenNinetyNine" class="col-lg-3 col-md-4 col-xs-6">
+				<!-- small box -->
+				<div class="small-box bg-aqua">
+					<div class="inner">
+						<h3> <span th:text="${saldoDoMes}" th:remove="tag"></span> <sup style="font-size: 20px">=</sup></h3>
+
+						<p style="color: white;" th:text="${#temporals.format(#temporals.createNow(), 'MMMM')}">Mês</p>
+					</div>
+					<div class="icon">
+						<i class="fa fa-usd"></i>
+					</div>
+					<a href="#" class="small-box-footer">&nbsp; <!-- <i
+						class="fa fa-arrow-circle-right"></i> -->
+					</a>
+				</div>
+			</div>
+
+			<div id="hideWhenTwoThousand" class="col-lg-3 col-md-4 col-xs-6">
+				<!-- small box -->
+				<div class="small-box bg-yellow">
+					<div class="inner">
+						<h3 th:text="${contas}"></h3>
+
+						<p style="color: white;">Nº Contas</p>
+					</div>
+					<div class="icon">
+						<i class="ion ion-person-add"></i>
+					</div>
+					<a href="#" class="small-box-footer">&nbsp; <!-- <i
+						class="fa fa-arrow-circle-right"></i> -->
+					</a>
+				</div>
+			</div>
+
+		</div>
+
+		<div class="row">
+			<div class="col-xs-12">
+				<div id="container"
+					style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+			</div>
+		</div>
+
+	</div>
+
+	<!-- [ "Lava", "Oppo", "HTC", "Iphone", "Samsung", "MI" ] -->
+	<script th:inline="javascript">
+		$(function() {
+			Highcharts
+					.chart(
+							'container',
+							{
+								chart : {
+									type : 'column'
+								},
+								title : {
+									text : 'Balancete do ano'
+								},
+								subtitle : {
+									text : 'Detalhes do meu balencete'
+								},
+								xAxis : {
+									categories : [[(${meses})]],
+									crosshair : true
+								},
+								yAxis : {
+									min : 0,
+									title : {
+										text : 'Movimentação Financeira [em R$]'
+									}
+								},
+								tooltip : {
+									headerFormat : '<span style="font-size:10px">{point.key}</span><table>',
+									pointFormat : '<tr><td style="color:{series.color};padding:0">{series.name}: </td>'
+											+ '<td style="padding:0"><b>{point.y:.1f}</b></td></tr>',
+									footerFormat : '</table>',
+									shared : true,
+									useHTML : true
+								},
+								plotOptions : {
+									column : {
+										pointPadding : 0.2,
+										borderWidth : 0
+									}
+								},
+								series : [ {
+									name : 'Receita',
+									data : [[${receitas}]]
+								// [4000, 3560, 5560, 10000, 5000, 2000]
+
+								}, {
+									name : 'Despesa',
+									data : [[${despesas}]]
+								} ]
+							});
+		});
+	</script>
+
+</th:block>
+
+</html>

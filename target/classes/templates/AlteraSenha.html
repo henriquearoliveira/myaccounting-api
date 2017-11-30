@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/LayoutSimples">
+
+<th:block layout:fragment="conteudo">
+
+	<div class="content">
+
+		<div class="scale">
+			<div id="logo">
+				<div id="green-circle-1">
+					<div id="green-circle-2">
+						<span class="top char0">
+							<p></p>
+						</span><span class="top char1">
+							<p>A</p>
+						</span><span class="top char2">
+							<p>C</p>
+						</span><span class="top char3">
+							<p>C</p>
+						</span><span class="top char4">
+							<p>O</p>
+						</span><span class="top char5">
+							<p>U</p>
+						</span><span class="top char6">
+							<p>N</p>
+						</span><span class="top char7">
+							<p>T</p>
+						</span><span class="top char8">
+							<p></p>
+						</span><span class="bottom char0">
+							<p></p>
+						</span><span class="bottom char1">
+							<p></p>
+						</span><span class="bottom char2">
+							<p>$</p>
+						</span><span class="bottom char3">
+							<p>$</p>
+						</span><span class="bottom char4">
+							<p></p>
+						</span><span class="bottom char5">
+							<p></p>
+						</span>
+						<div id="white-circle-1">
+							<div id="box">
+								<div class="circle"></div>
+								<div class="circle"></div>
+								<div class="circle"></div>
+								<div class="circle"></div>
+								<div class="circle"></div>
+								<div class="circle"></div>
+								<div class="circle"></div>
+								<div class="circle"></div>
+								<div class="circle"></div>
+								<div class="circle"></div>
+								<div class="circle"></div>
+								<div class="circle"></div>
+								<div class="circle"></div>
+								<div class="circle"></div>
+								<div class="circle"></div>
+								<div class="circle"></div>
+								<div class="circle"></div>
+								<div class="circle"></div>
+								<div class="circle"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<form method="POST" th:object="${alteraSenha}" th:action="@{/alterasenha}"
+			role="form">
+			
+			<div class="mat-in hidden">
+				<input id="email" type="text" th:value="${alteraSenha.email}" th:field="*{email}" required="true"></input>
+				<span class="bar"></span>
+				<label for="email">Email</label>
+			</div>
+			
+			<div class="mat-in hidden">
+				<input id="codigo" type="text" th:value="${alteraSenha.codigo}" th:field="*{codigo}" required="true"></input>
+				<span class="bar"></span>
+				<label for="email">Codigo</label>
+			</div>
+
+			<div class="mat-in">
+				<input id="password" type="password" th:field="*{password}" required="true"></input>
+				<span class="bar"></span>
+				<label for="email">Senha</label>
+			</div>
+			
+			<div class="mat-in">
+				<input id="confirmPassword" type="password" th:field="*{confirmPassword}" required="true"></input>
+				<span class="bar"></span>
+				<label for="email">Confirmar senha</label>
+			</div>
+
+			<button type="submit" value="submit" id="cadastrar">Enviar</button>
+			
+			<div th:replace="mensagensutils/MensagensAlertas :: alert"></div>
+
+		</form>
+
+	</div>
+</th:block>
+</html>

@@ -1,0 +1,107 @@
+<div th:fragment="tabelaLancamento" xmlns:th="http://www.thymeleaf.org"
+	th:remove="tag" th:unless="${#lists.isEmpty(lancamentos)}"> 
+
+	<div id="idTabelaCompleta">
+	
+		<table class="table table-bordered table-striped">
+		
+			<thead>
+			
+				<tr>
+					<th class="text-center">Pago</th>
+					<th class="text-center">Data</th>
+					<th class="text-center">Descrição</th>
+					<th class="text-center">Valor</th>
+					<th class="text-center">Ação</th>
+				</tr>
+				
+			</thead>
+			
+			<tbody>
+			
+				<tr th:each="lancamento : ${lancamentos}" th:id="tr+${lancamento.id}">
+					<td class="col-sm-1 text-center">
+		                <label class="custom-control custom-checkbox" th:if="${lancamento.categoria.tipoDeCategoria.name()} == 'DESPESA'" >
+		                    <input type="checkbox" class="custom-control-input" style="display: none;" th:checked="${lancamento.pago}" onclick="return false;"/>
+		                    <span class="custom-control-indicator"></span>
+		                </label>
+	                </td>
+					<td class="col-sm-2 text-center" th:text="${#temporals.format(lancamento.dataHoraLancamento,'dd/MM/yyyy')}"></td>
+					<td><a th:href="@{/lancamento/{id}(id=${lancamento.id})}" th:text="${lancamento.descricao}"></a></td>
+					<td class="col-sm-2" th:text="((${lancamento.categoria.tipoDeCategoria.name()} == 'DESPESA') ? '- ' : '') + ${'R$ ' + #numbers.formatDecimal(lancamento.valorLancamento, 1, 'POINT', 2, 'COMMA')}"></td>
+					<td class="col-xs-2 text-center">
+						<a th:href="@{/lancamento/} + ${lancamento.id}" style="padding: 6px 10px" class="glyphicon glyphicon-edit" role="button"></a>
+						<button th:id="${lancamento.id}" th:value="${lancamento.id}" type="button" data-toggle="modal" data-target="#confirmaExclusaoModal" style="background:none;border:none;padding:0;" ><i class="glyphicon glyphicon-trash"></i></button>
+					</td>	
+				</tr>
+				
+			</tbody>
+			
+		</table>
+		
+		<div class="row" th:unless="${receitas == null}">
+			<div class="col-xs-offset-6 col-xs-6 col-md-offset-6 col-md-6 text-right">
+				<span style= "color: gray;">Total das receitas: </span>
+				<strong style= "font-size: 20px; color: #00C49D;" th:text="${receitas != null} ? ${'R$ ' + #numbers.formatDecimal(receitas, 1, 'POINT', 2, 'COMMA')} : 0.00">0,00</strong>
+			</div>
+		</div>
+		
+		<div class="row" th:unless="${debitos == null}">
+			<div class="col-xs-offset-6 col-xs-6 col-md-offset-8 col-md-4 text-right">
+				<span style= "color: gray;">Total dos débitos: </span>
+				<strong style= "font-size: 20px; color: #00C49D;" th:text="${debitos != null} ? ${'R$ ' + #numbers.formatDecimal(debitos, 1, 'POINT', 2, 'COMMA')} : 0.00">0,00</strong>
+			</div>
+		</div>
+		
+		<div class="row" th:unless="${saldo == null}">
+		
+			<div th:class="${saldo &gt; 0} ? 'col-xs-offset-6 col-xs-6 col-md-offset-8 col-md-4 text-right' : 'col-xs-offset-5 col-xs-7 col-md-offset-7 col-md-5 text-right' ">
+				
+				<span style= "color: gray;">Saldo Atual: </span>
+	
+				<strong style= "font-size: 20px; color: #00C49D;" th:text="${saldo != null} ? ${'R$ ' + #numbers.formatDecimal(saldo, 1, 'POINT', 2, 'COMMA')} : 0.00">0,00</strong>
+				
+				<button type="button" class="btn btn-default dropdown-toggle personalized-color" id="idDeposito" data-toggle="dropdown"><span class="fa fa-caret-down"></span></button>
+		        
+		        <ul class="dropdown-menu pull-right" id="idDeposito">
+			        <li><a data-target="#confirmaLancamentoOuDeposito" data-toggle="modal"
+			        	href="#confirmaLancamentoOuDeposito">Opções de depósitos</a></li>
+		        </ul>
+			</div>
+			
+			<!-- <div th:if="${saldo &gt; 0 and #lists.size(contas) &gt; 2}" id="idDeposito" class="input-group-btn dropdown"> -->
+				
+				<!-- id= teste -->
+	        	<!-- <button type="button" class="btn btn-default dropdown-toggle personalized-color" id="idDeposito" data-toggle="dropdown"><span class="fa fa-caret-down"></span></button>
+		        
+		        <ul class="dropdown-menu pull-right">
+			        <li><a data-target="#confirmaLancamentoOuDeposito" data-toggle="modal"
+			        	href="#confirmaLancamentoOuDeposito">Opções de depósitos</a></li> -->
+			        <!--<li class="divider"></li>
+			        <li><a data-target="#confirmaLancamentoProximoMes" data-toggle="modal"
+			        	href="#confirmaLancamentoProximoMes">Lançamento próximo mês</a></li> -->
+			        <!-- <li><a href="#">Separated link</a></li> -->
+		        <!-- </ul> -->
+	       	<!-- </div> -->
+	       	
+		</div>
+		
+		<div class="row" th:unless="${saldoProvavel == null}">
+			<div class="col-xs-offset-5 col-xs-7 col-md-offset-7 col-md-5 text-right">
+				<span style= "color: gray;">Probabilidade saldo: </span>
+				<strong style= "font-size: 20px; color: #00C49D;" th:text="${saldoProvavel != null} ? ${'R$ ' + #numbers.formatDecimal(saldoProvavel, 1, 'POINT', 2, 'COMMA')} : 0.00">0,00</strong>
+			</div>
+		</div>
+		
+		<div class="row" th:unless="${total == null}">
+			<div class="col-xs-offset-6 col-xs-6 col-md-offset-8 col-md-4 text-right">
+				<span style= "color: gray;">Total: </span>
+	
+				<strong style= "font-size: 20px; color: #00C49D;" th:text="${total != null} ? ${'R$ ' + #numbers.formatDecimal(total, 1, 'POINT', 2, 'COMMA')} : 0.00">0,00</strong>
+																												<!-- COLOCANDO ESSE 1 O VALOR FICA ASSIM: R$ 0,50 CASO CONTRÁRIO R$ ,50 -->
+			</div>
+		</div>
+	
+	</div>
+
+</div>
