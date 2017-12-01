@@ -5,14 +5,12 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.ModelAndView;
 
 import br.com.contability.business.Conta;
 import br.com.contability.business.Usuario;
 import br.com.contability.business.repository.ContaRepository;
 import br.com.contability.comum.ServicesAbstract;
 import br.com.contability.exceptions.ObjetoInexistenteException;
-import br.com.contability.exceptions.ObjetoInexistenteExceptionMessage;
 
 @Service
 public class ContaServices extends ServicesAbstract<Conta, ContaRepository> {
@@ -85,17 +83,13 @@ public class ContaServices extends ServicesAbstract<Conta, ContaRepository> {
 	 * @param id
 	 * @return
 	 */
-	public ModelAndView getConta(Usuario usuario, ModelAndView mv, Object id) {
+	public void getConta(Usuario usuario, Object id) {
 		
 		Long idConta = parametroServices.trataParametroLongMessage(id, "/conta");
 		
 		Optional<Conta> conta = super.getJpa().getConta(usuario.getId(), idConta);
 
-		conta.orElseThrow(() -> new ObjetoInexistenteExceptionMessage("/conta", "Conta não encontrada"));
-
-		mv.addObject("conta", conta.get());
-
-		return mv;
+		conta.orElseThrow(() -> new ObjetoInexistenteException("Conta não encontrada"));
 
 	}
 	
@@ -103,7 +97,7 @@ public class ContaServices extends ServicesAbstract<Conta, ContaRepository> {
 		
 		Optional<Conta> conta = super.getJpa().getConta(usuario.getId(), idConta);
 
-		return conta.orElseThrow(() -> new ObjetoInexistenteExceptionMessage("/conta", "Conta não encontrada"));
+		return conta.orElseThrow(() -> new ObjetoInexistenteException("Conta não encontrada"));
 
 	}
 

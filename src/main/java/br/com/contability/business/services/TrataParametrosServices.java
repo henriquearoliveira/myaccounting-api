@@ -3,7 +3,6 @@ package br.com.contability.business.services;
 import org.springframework.stereotype.Component;
 
 import br.com.contability.exceptions.ObjetoInexistenteException;
-import br.com.contability.exceptions.ObjetoInexistenteExceptionMessage;
 import br.com.contability.exceptions.ObjetoNaoAutorizadoException;
 
 @Component
@@ -26,7 +25,7 @@ public class TrataParametrosServices {
 			
 			idLan = Long.parseLong(idLancamento);
 		} catch (Exception e) {
-			throw new ObjetoInexistenteExceptionMessage(redirecionamento, "Parametro incorreto");
+			throw new ObjetoInexistenteException("Parametro incorreto");
 		}
 		return idLan;
 	}

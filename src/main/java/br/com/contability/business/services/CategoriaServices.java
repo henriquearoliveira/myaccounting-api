@@ -6,7 +6,6 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.ModelAndView;
 
 import br.com.contability.business.Categoria;
 import br.com.contability.business.TipoDeCategoria;
@@ -14,7 +13,6 @@ import br.com.contability.business.Usuario;
 import br.com.contability.business.repository.CategoriaRepository;
 import br.com.contability.comum.ServicesAbstract;
 import br.com.contability.exceptions.ObjetoInexistenteException;
-import br.com.contability.exceptions.ObjetoInexistenteExceptionMessage;
 
 @Service
 public class CategoriaServices extends ServicesAbstract<Categoria, CategoriaRepository> {
@@ -28,18 +26,14 @@ public class CategoriaServices extends ServicesAbstract<Categoria, CategoriaRepo
 	 * @param usuario
 	 * @return
 	 */
-	public ModelAndView getCategoria(Object id, ModelAndView mv, Usuario usuario) {
+	public Categoria getCategoria(Object id, Usuario usuario) {
 		
 		Long idCategoria = parametroServices.trataParametroLongMessage(id, "/categoria");
 		
 		Optional<Categoria> categoria = super.getJpa().getCategorias(idCategoria, usuario.getId());
 
-		categoria.orElseThrow(() -> new ObjetoInexistenteExceptionMessage("/categoria", "Categoria não encontrada"));
+		return categoria.orElseThrow(() -> new ObjetoInexistenteException("Categoria não encontrada"));
 		
-		mv.addObject("categoria", categoria.get());
-		mv.addObject("tipoDeCategorias", categoria.get().getTipoDeCategoria());
-
-		return mv;
 	}
 
 	/**

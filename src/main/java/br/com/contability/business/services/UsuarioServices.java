@@ -10,7 +10,7 @@ import br.com.contability.business.Usuario;
 import br.com.contability.business.repository.UsuarioRepository;
 import br.com.contability.comum.AuthenticationAbstract;
 import br.com.contability.comum.ServicesAbstract;
-import br.com.contability.exceptions.ObjetoInexistenteExceptionMessage;
+import br.com.contability.exceptions.ObjetoInexistenteException;
 
 @Service
 public class UsuarioServices extends ServicesAbstract<Usuario, UsuarioRepository> {
@@ -26,8 +26,7 @@ public class UsuarioServices extends ServicesAbstract<Usuario, UsuarioRepository
 
 		Optional<Usuario> usuario = super.getJpa().getPelo(email);
 
-		return usuario.orElseThrow(() -> new ObjetoInexistenteExceptionMessage(paginaRedirecionamento,
-				"Usuario inexistente para o email"));
+		return usuario.orElseThrow(() -> new ObjetoInexistenteException("Usuario inexistente para o email"));
 	}
 
 	/**
@@ -49,8 +48,8 @@ public class UsuarioServices extends ServicesAbstract<Usuario, UsuarioRepository
 
 		Optional<Usuario> usuario = super.getJpa().getUsuarioPelo(codigo);
 
-		return usuario.orElseThrow(() -> new ObjetoInexistenteExceptionMessage("/login",
-				"Codigo não encontrado por favor requisite outro codigo"));
+		return usuario.orElseThrow(() ->
+			new ObjetoInexistenteException("Codigo não encontrado por favor requisite outro codigo"));
 
 	}
 

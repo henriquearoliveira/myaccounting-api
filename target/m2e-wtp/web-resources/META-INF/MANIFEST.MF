@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Implementation-Title: Contability
 Implementation-Version: 1.0.1-SNAPSHOT
-Built-By: henrique
+Built-By: eliel
 Implementation-Vendor-Id: br.com.contability
-Build-Jdk: 1.8.0_131
+Build-Jdk: 1.8.0_151
 Implementation-URL: http://projects.spring.io/spring-boot/contability/
 Created-By: Maven Integration for Eclipse
 Implementation-Vendor: Pivotal Software, Inc.

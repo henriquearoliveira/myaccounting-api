@@ -7,7 +7,7 @@ import java.nio.file.Files;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-import br.com.contability.exceptions.ObjetoNaoAutorizadoMessage;
+import br.com.contability.exceptions.ObjetoNaoAutorizadoException;
 
 @Component
 public class ConfiguraArquivosServices {
@@ -30,10 +30,10 @@ public class ConfiguraArquivosServices {
 			file.transferTo(imagem);
 		} catch (IllegalStateException e1) {
 			e1.printStackTrace();
-			throw new ObjetoNaoAutorizadoMessage();
+			throw new ObjetoNaoAutorizadoException();
 		} catch (IOException e1) {
 			e1.printStackTrace();
-			throw new ObjetoNaoAutorizadoMessage();
+			throw new ObjetoNaoAutorizadoException();
 		}
 		return imagem;
 	}

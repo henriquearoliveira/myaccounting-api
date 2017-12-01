@@ -9,7 +9,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import br.com.contability.exceptions.ObjetoComDependenciaException;
 import br.com.contability.exceptions.ObjetoExistenteException;
-import br.com.contability.exceptions.ObjetoExistenteExceptionModel;
 import br.com.contability.exceptions.ObjetoInexistenteException;
 
 public class ServicesAbstract<T extends BeanIdentificavel, E extends JpaRepository<T, Long>> implements IServices<T> {
@@ -29,7 +28,7 @@ public class ServicesAbstract<T extends BeanIdentificavel, E extends JpaReposito
 		try {
 			return jpa.save(objeto);
 		} catch (DataIntegrityViolationException e) {
-			optional.orElseThrow(() -> new ObjetoExistenteExceptionModel("O objeto não é possível ser atualizado."));
+			optional.orElseThrow(() -> new ObjetoExistenteException("O objeto não é possível ser atualizado."));
 			throw new ObjetoExistenteException("O objeto não é possível ser atualizado.");
 		}
 	}
@@ -41,7 +40,7 @@ public class ServicesAbstract<T extends BeanIdentificavel, E extends JpaReposito
 		T objeto = jpa.findOne(id);
 
 		if (objeto == null){
-			optional.orElseThrow(() -> new ObjetoExistenteExceptionModel("O objeto requisitado não existe."));
+			optional.orElseThrow(() -> new ObjetoExistenteException("O objeto requisitado não existe."));
 			
 			throw new ObjetoInexistenteException("O objeto requisitado não existe.");
 			
@@ -62,7 +61,7 @@ public class ServicesAbstract<T extends BeanIdentificavel, E extends JpaReposito
 			return jpa.save(objeto);
 
 		} catch (DataIntegrityViolationException e) {
-			optional.orElseThrow(() -> new ObjetoExistenteExceptionModel("Objeto já existente."));
+			optional.orElseThrow(() -> new ObjetoExistenteException("Objeto já existente."));
 			throw new ObjetoExistenteException("Objeto já existente.");
 		}
 
@@ -76,7 +75,7 @@ public class ServicesAbstract<T extends BeanIdentificavel, E extends JpaReposito
 		try {
 			jpa.delete(objeto);
 		} catch (DataIntegrityViolationException e) {
-			optional.orElseThrow(() -> new ObjetoExistenteExceptionModel("Objeto com dependencias."));
+			optional.orElseThrow(() -> new ObjetoExistenteException("Objeto com dependencias."));
 			throw new ObjetoComDependenciaException("Objeto com dependencias.");
 		}
 

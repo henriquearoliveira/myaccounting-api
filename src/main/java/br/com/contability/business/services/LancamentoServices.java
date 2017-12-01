@@ -22,7 +22,6 @@ import org.jopendocument.dom.spreadsheet.Sheet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
 import br.com.contability.business.Categoria;
 import br.com.contability.business.Conta;
@@ -36,7 +35,6 @@ import br.com.contability.comum.IServices;
 import br.com.contability.comum.ServicesAbstract;
 import br.com.contability.comum.SessaoServices;
 import br.com.contability.exceptions.ObjetoInexistenteException;
-import br.com.contability.exceptions.ObjetoInexistenteExceptionMessage;
 import br.com.contability.utilitario.CaixaDeFerramentas;
 
 @Service
@@ -116,7 +114,7 @@ public class LancamentoServices extends ServicesAbstract<Lancamento, LancamentoR
 	private void verificaConta(Conta conta) {
 		
 		if (conta == null)
-			throw new ObjetoInexistenteExceptionMessage("/lancamento/lista", "Conta não vinculada");
+			throw new ObjetoInexistenteException("Conta não vinculada");
 		
 	}
 
@@ -351,21 +349,19 @@ public class LancamentoServices extends ServicesAbstract<Lancamento, LancamentoR
 	 * @param model
 	 * @return mv
 	 */
-	public ModelAndView getLancamento(Usuario usuario, ModelAndView mv, Object id) {
+	public void getLancamento(Usuario usuario, Object id) {
 
 		Long idLancamento = parametroServices.trataParametroLongMessage(id, "/lancamento");
 
 		Optional<Lancamento> lancamento = super.getJpa().getLancamento(usuario.getId(), idLancamento);
 
-		lancamento.orElseThrow(() -> new ObjetoInexistenteExceptionMessage("/lancamento", "Lançamento não encontrado"));
+		lancamento.orElseThrow(() -> new ObjetoInexistenteException("Lançamento não encontrado"));
 
 		lancamento.get().setValorConversao(lancamento.get().getValorLancamento().toString());
 
-		mv.addObject("lancamento", lancamento.get());
-		mv.addObject("categorias", categoriaServices.getPeloLancamento(lancamento.get().getId()));
-		mv.addObject("contas", contaServices.getPeloLancamento(lancamento.get().getId()));
+		categoriaServices.getPeloLancamento(lancamento.get().getId());
+		contaServices.getPeloLancamento(lancamento.get().getId());
 
-		return mv;
 
 	}
 
@@ -478,22 +474,22 @@ public class LancamentoServices extends ServicesAbstract<Lancamento, LancamentoR
 
 	private void verificaData(Lancamento l) {
 		if (l.getCategoria() == null)
-			throw new ObjetoInexistenteExceptionMessage("/import", "Data não informada.");
+			throw new ObjetoInexistenteException("Data não informada.");
 	}
 
 	private void verificaDescricao(Lancamento l) {
 		if (l.getCategoria() == null)
-			throw new ObjetoInexistenteExceptionMessage("/import", "Descrição não informada.");
+			throw new ObjetoInexistenteException("Descrição não informada.");
 	}
 
 	private void verificaCategoria(Lancamento l) {
 		if (l.getCategoria() == null)
-			throw new ObjetoInexistenteExceptionMessage("/import", "Categoria não vinculada.");
+			throw new ObjetoInexistenteException("Categoria não vinculada.");
 	}
 
 	private void verificaValorLancamento(Lancamento l) {
 		if (l.getCategoria() == null)
-			throw new ObjetoInexistenteExceptionMessage("/import", "Valor não informado.");
+			throw new ObjetoInexistenteException("Valor não informado.");
 	}
 
 	@Override

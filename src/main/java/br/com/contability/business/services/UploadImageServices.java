@@ -14,7 +14,7 @@ import com.cloudinary.Cloudinary;
 import br.com.contability.business.UploadImage;
 import br.com.contability.business.repository.UploadImageRepository;
 import br.com.contability.comum.ServicesAbstract;
-import br.com.contability.exceptions.ObjetoNaoAutorizadoMessage;
+import br.com.contability.exceptions.ObjetoNaoAutorizadoException;
 import br.com.contability.utilitario.CaixaDeFerramentas;
 
 @Service
@@ -78,7 +78,7 @@ public class UploadImageServices extends ServicesAbstract<UploadImage, UploadIma
 		} catch (IOException e) {
 
 			e.printStackTrace();
-			throw new ObjetoNaoAutorizadoMessage();
+			throw new ObjetoNaoAutorizadoException();
 
 		}
 
