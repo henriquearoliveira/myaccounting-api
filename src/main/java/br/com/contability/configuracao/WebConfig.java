@@ -37,35 +37,22 @@ public class WebConfig implements Filter {
 		final HttpServletResponse response = (HttpServletResponse) res;
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		response.setHeader("Access-Control-Allow-Methods", "POST, PUT, GET, OPTIONS, DELETE,");
-		response.setHeader("Access-Control-Allow-Headers", "Authorization, Content-Type");
+		response.setHeader("Access-Control-Allow-Headers",
+				"Origin, X-Requested-With, Content-Type, Accept, Accept-Encoding,"
+				+ " Accept-Language, Host, Referer, Connection, User-Agent, authorization,"
+				+ " sw-useragent, sw-version");
 		response.setHeader("Access-Control-Max-Age", "3600");
+		response.setHeader("Access-Control-Allow-Credentials", "true");
+
 		if ("OPTIONS".equalsIgnoreCase(((HttpServletRequest) req).getMethod())) {
-		
+			System.err.println("passei...");
 			response.setStatus(HttpServletResponse.SC_OK);
-		
 		} else {
+			System.err.println("passei");
 			chain.doFilter(req, res);
 		}
 		
 	}
-	
-	/*@Override
-	public void doFilter(ServletException req, ServletResponse res, FilterChain chain) throws IOException, ServeletException {
-	
-		final HttpServeletResponse response = (HttpServeletResponse) res;
-		response.setHeader("Access-Control-Allow-Origin", "*");
-		response.setHeader("Access-Control-Allow-Methods", "POST, PUT, GET, OPTIONS, DELETE,");
-		response.setHeader("Access-Control-Allow-Headers", "Authorization, Content-Type");
-		response.setHeader("Access-Control-Max-Age", "3600");
-		if ("OPTIONS.equalsIgnoreCase(((HttpServeletRequest) req).getMethod())) {
-		
-			response.setStatus(HttpServeletResponse.SC_OK);
-		
-		} else {
-			chain.doFilter(req, res);
-		}
-	
-	}*/
 	
 	@Override
 	public void destroy() {
@@ -74,5 +61,26 @@ public class WebConfig implements Filter {
 	@Override
 	public void init(FilterConfig config) throws ServletException {
 	}
-
+	
 }
+
+/*@Configuration
+public class WebConfig {
+	
+    @Bean
+    public CorsFilter corsFilter() {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowCredentials(true);
+        config.addAllowedOrigin("*");
+        config.addAllowedHeader("*");
+        config.addAllowedMethod("OPTIONS");
+        config.addAllowedMethod("GET");
+        config.addAllowedMethod("POST");
+        config.addAllowedMethod("PUT");
+        config.addAllowedMethod("DELETE");
+        source.registerCorsConfiguration("/**", config);
+        return new CorsFilter(source);
+    }
+    
+}*/

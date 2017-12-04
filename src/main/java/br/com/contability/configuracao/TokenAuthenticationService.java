@@ -1,5 +1,6 @@
 package br.com.contability.configuracao;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.Date;
 
@@ -28,6 +29,15 @@ public class TokenAuthenticationService {
 					.compact();
 			
 			response.addHeader(HEADER_STRING, TOKEN_PREFIX + " " + JWT);
+			
+			String tokenClient = "{\"token\":\""+JWT+"\"}";
+
+			try {
+				response.getWriter().write(tokenClient);
+				response.getWriter().flush();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		
 		static Authentication getAuthentication(HttpServletRequest request) {
