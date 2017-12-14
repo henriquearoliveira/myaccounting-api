@@ -1,5 +1,9 @@
 package br.com.contability.business;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+
+import br.com.contability.exceptions.ObjetoInexistenteException;
+
 public enum TipoDeCategoria {
 
 	DESPESA("Despesa"/*, new Usuario()*/),
@@ -20,6 +24,25 @@ public enum TipoDeCategoria {
 
 	public String getDescricao() {
 		return descricao;
+	}
+	
+	@JsonCreator
+	public static TipoDeCategoria create(String value) {
+		
+		if (value == null)
+			throw new ObjetoInexistenteException("Valor do Enum não Encontrado");
+
+		for (TipoDeCategoria tipoDeCategoria : values()) {
+			
+			if (value.equals(tipoDeCategoria.getDescricao())){
+				return tipoDeCategoria;
+			} else if (value.equals(tipoDeCategoria.name())) {
+				return tipoDeCategoria;
+			}
+		}
+		
+		throw new ObjetoInexistenteException("Tipo de categoria não encontrado");
+		
 	}
 
 	/*public BeanIdentificavel getBeanIdentificavel() {

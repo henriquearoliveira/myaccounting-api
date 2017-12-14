@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -60,11 +61,21 @@ public class CategoriaResources {
 
 	@PostMapping
 	public ResponseEntity<Void> salvar(@Valid @RequestBody Categoria categoria) {
-		Usuario usuario = auth.getAutenticacao();
+		
+		/*Usuario usuario = auth.getAutenticacao();
 		
 		categoriaServices.gravarCategoria(categoria, usuario);
 		
-		return ResponseEntity.noContent().build();
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("{id}")
+				.buildAndExpand(categoria.getId()).toUri();
+
+		return ResponseEntity.created(uri).build();*/
+		
+		System.out.println(categoria.getDescricao());
+		System.out.println(categoria.getTipoDeCategoria());
+		System.out.println(categoria.getObservacao());
+		
+		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
 
 	@GetMapping(value = "/lista")
