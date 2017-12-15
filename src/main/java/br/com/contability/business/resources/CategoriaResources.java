@@ -81,7 +81,12 @@ public class CategoriaResources {
 	@GetMapping(value = "/lista")
 	public ResponseEntity<List<Categoria>> lista(Model model) {
 		
-		Usuario usuario = auth.getAutenticacao();
+//		Usuario usuario = auth.getAutenticacao();
+		
+		Usuario usuario = new Usuario();
+		usuario.setId(5l);
+		
+		System.err.println("CATEGORIA");
 		
 		return ResponseEntity.ok(categoriaServices.seleciona(usuario));
 		

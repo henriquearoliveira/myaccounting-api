@@ -1,6 +1,7 @@
 package br.com.contability.business;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 import br.com.contability.exceptions.ObjetoInexistenteException;
 
@@ -22,6 +23,7 @@ public enum TipoDeCategoria {
 
 	}
 
+	@JsonValue
 	public String getDescricao() {
 		return descricao;
 	}
